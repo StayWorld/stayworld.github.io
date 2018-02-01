@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Slash Blog">
 <meta property="og:description" content="百度地图创建地图创建mapView需要viewWillApper声明 123456- (void)cmi_viewWillApper &amp;#123;    [_mapView viewWillAppear];    _mapView.delegate = self;    _locService.delegate = self;    _geocodeSearch.delegate = self;&amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-01T09:04:09.000Z">
+<meta property="og:updated_time" content="2018-02-01T09:08:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Slash Blog">
 <meta name="twitter:description" content="百度地图创建地图创建mapView需要viewWillApper声明 123456- (void)cmi_viewWillApper &amp;#123;    [_mapView viewWillAppear];    _mapView.delegate = self;    _locService.delegate = self;    _geocodeSearch.delegate = self;&amp;">
@@ -299,7 +299,7 @@
       
 
       
-        <h1 id="百度地图"><a href="#百度地图" class="headerlink" title="百度地图"></a>百度地图</h1><h1 id="创建地图"><a href="#创建地图" class="headerlink" title="创建地图"></a>创建地图</h1><p>创建mapView需要viewWillApper声明</p>
+        <h4 id="百度地图"><a href="#百度地图" class="headerlink" title="百度地图"></a>百度地图</h4><h1 id="创建地图"><a href="#创建地图" class="headerlink" title="创建地图"></a>创建地图</h1><p>创建mapView需要viewWillApper声明</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)cmi_viewWillApper &#123;</span><br><span class="line">    [_mapView viewWillAppear];</span><br><span class="line">    _mapView.delegate = self;</span><br><span class="line">    _locService.delegate = self;</span><br><span class="line">    _geocodeSearch.delegate = self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>退出界面需要使用viewWillApper注销代理</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)cmi_viewWillDisappear &#123;</span><br><span class="line">    [_mapView viewWillDisappear];</span><br><span class="line">    _mapView.delegate = nil;</span><br><span class="line">    _locService.delegate = nil;</span><br><span class="line">    _geocodeSearch.delegate = nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -448,7 +448,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#百度地图"><span class="nav-number">1.</span> <span class="nav-text">百度地图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建地图"><span class="nav-number">2.</span> <span class="nav-text">创建地图</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#百度地图"><span class="nav-number">1.</span> <span class="nav-text">百度地图</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建地图"><span class="nav-number"></span> <span class="nav-text">创建地图</span></a></div>
             
 
           </div>
