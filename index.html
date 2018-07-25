@@ -187,6 +187,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -234,7 +244,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Slash">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -271,6 +281,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/IOS/" itemprop="url" rel="index">
+                    <span itemprop="name">IOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -300,19 +332,17 @@
       
         
           
-            <h1 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h1><p>浅拷贝就是对内存地址的复制, 让目标对象指针和源对象指针指向同一片内存空间</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *str = (<span class="keyword">char</span>*)malloc(<span class="number">100</span>);</span><br><span class="line"><span class="keyword">char</span> *str2 = str;</span><br></pre></td></tr></table></figure>
-<p>浅拷贝只是对对象的简单copy, 让几个对象共用一片内存, 当内存销毁的时候, 指向这片内存的几个指针需要重新定义才可以是使用, 要不然会成为野指针</p>
-<p>IOS 中使用retain 关键字进行引用计数, 就是一种更加保险的浅拷贝, 即可以让几个指针共用同一片内存空间, 有可以在release由于计数的存在, 不会轻易的销毁内存, 达到更加简单使用目的</p>
-<p>IOS 中并不是所有的对象都支持copy, mutableCopy, 遵守NSCopying协议的类都可以发送copy消息, 遵守NSMutableCopying协议的类可以发送mutableCopy消息</p>
-<h1 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h1><p>深拷贝指拷贝对象的具体内容, 内存地址是自主分配的, 拷贝结束之后, 两个对象虽然存在相同的值, 但是内存地址不一样, 从而互不影响, 互不干涉</p>
-<p>IOS 中Copy 和 mutableCopy方法, copy 复制一个imutable对象, mutableCopy复制mutable对象</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *string = <span class="string">@"dddd"</span>;</span><br><span class="line"><span class="built_in">NSString</span> *stringCopy = [string <span class="keyword">copy</span>];</span><br><span class="line"><span class="built_in">NSMutableString</span> *stringDCopy = [string mutableCopy]</span><br><span class="line">[stringDCopy appendString:<span class="string">@"!!"</span>];</span><br></pre></td></tr></table></figure>
-<h3 id="copy-与retain的区别"><a href="#copy-与retain的区别" class="headerlink" title="copy 与retain的区别"></a>copy 与retain的区别</h3><p>copy 创建一个新对象, retain 创建一个指针, 引用对象计数加一. copy 属性标示两个对象内容相同, 新的对象 retain count 为1, 与旧对象引用计数无关, 旧有对象没有变化. copy 减少对象对上下文的依赖</p>
-<h3 id="拷贝构造-须遵循NSCopying-和-NSMutableCopying协议-实现copyWithZone-方法"><a href="#拷贝构造-须遵循NSCopying-和-NSMutableCopying协议-实现copyWithZone-方法" class="headerlink" title="拷贝构造, 须遵循NSCopying 和 NSMutableCopying协议, 实现copyWithZone:方法"></a>拷贝构造, 须遵循NSCopying 和 NSMutableCopying协议, 实现copyWithZone:方法</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MyObj</span> : <span class="title">NSObject</span>&lt;<span class="title">NSCopying</span>, <span class="title">NSMutableCopying</span>&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">NSMutableString</span> *_name;</span><br><span class="line">    <span class="built_in">NSString</span> * _imutableStr ;</span><br><span class="line">    <span class="keyword">int</span> _age;</span><br><span class="line">&#125;     </span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">retain</span>) <span class="built_in">NSMutableString</span> *name;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">retain</span>) <span class="built_in">NSString</span> *imutableStr;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>) <span class="keyword">int</span> age;</span><br></pre></td></tr></table></figure>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">id</span>)copyWithZone:(<span class="built_in">NSZone</span> *)zone&#123;</span><br><span class="line">    MyObj *<span class="keyword">copy</span> = [[[<span class="keyword">self</span> <span class="keyword">class</span>] allocWithZone :zone] init];</span><br><span class="line">    <span class="keyword">copy</span>-&gt;name = [_name <span class="keyword">copy</span>];</span><br><span class="line">    <span class="keyword">copy</span>-&gt;imutableStr = [_imutableStr <span class="keyword">copy</span>];</span><br><span class="line">    <span class="keyword">copy</span>-&gt;age = age;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">copy</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)mutableCopyWithZone:(<span class="built_in">NSZone</span> *)zone&#123;</span><br><span class="line">    MyObj *<span class="keyword">copy</span> = <span class="built_in">NSCopyObject</span>(<span class="keyword">self</span>, <span class="number">0</span>, zone);</span><br><span class="line">    <span class="keyword">copy</span>-&gt;name = [_name mutableCopy];</span><br><span class="line">    <span class="keyword">copy</span>-&gt;age = age;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">copy</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          浅拷贝浅拷贝就是对内存地址的复制, 让目标对象指针和源对象指针指向同一片内存空间
+12char *str = (char*)malloc(100);char *str2 = str;
+浅拷贝只是对对象的简单copy, 让几个对象共用一片内存, 当内存销毁的时候, 指向这片内存的几个指针需要重新定义才
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/25/浅拷贝和深拷贝/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -364,7 +394,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Slash">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -401,6 +431,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/IOS/" itemprop="url" rel="index">
+                    <span itemprop="name">IOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -430,27 +482,16 @@
       
         
           
-            <h1 id="创建地图"><a href="#创建地图" class="headerlink" title="创建地图"></a>创建地图</h1><p>创建mapView需要viewWillApper声明</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)cmi_viewWillApper &#123;</span><br><span class="line">    [_mapView viewWillAppear];</span><br><span class="line">    _mapView.delegate = self;</span><br><span class="line">    _locService.delegate = self;</span><br><span class="line">    _geocodeSearch.delegate = self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>退出界面需要使用viewWillApper注销代理</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)cmi_viewWillDisappear &#123;</span><br><span class="line">    [_mapView viewWillDisappear];</span><br><span class="line">    _mapView.delegate = nil;</span><br><span class="line">    _locService.delegate = nil;</span><br><span class="line">    _geocodeSearch.delegate = nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>创建mapView</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (BMKMapView *)mapView &#123;</span><br><span class="line">    <span class="keyword">if</span> (nil == _mapView) &#123;</span><br><span class="line">        _mapView = [[BMKMapView alloc] init];</span><br><span class="line">        _mapView.gesturesEnabled = NO; <span class="comment">// 取消地图上所有手势</span></span><br><span class="line">        _mapView.mapType = BMKMapTypeStandard; <span class="comment">// 地图类型</span></span><br><span class="line">        [_mapView setZoomLevel:<span class="number">19</span>]; <span class="comment">// 地图显示</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> _mapView;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 地图的中心位置</span></span><br><span class="line">_mapView.centerCoordinate = CLLocationCoordinate2DMake(userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);</span><br></pre></td></tr></table></figure>
-<p>开启定位</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">- (BMKLocationService *)locService &#123;</span><br><span class="line">    <span class="keyword">if</span> (nil == _locService) &#123;</span><br><span class="line">        _locService = [[BMKLocationService alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> _locService;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 开启定位</span></span><br><span class="line">- (<span class="keyword">void</span>)startLoction &#123;</span><br><span class="line">    [_locService startUserLocationService];</span><br><span class="line">    _mapView.showsUserLocation = NO;</span><br><span class="line">    <span class="comment">// 当前位置是什么模式, 比如跟随状态</span></span><br><span class="line">    _mapView.userTrackingMode = BMKUserTrackingModeNone;</span><br><span class="line">    <span class="comment">// 显示当前位置</span></span><br><span class="line">    _mapView.showsUserLocation = YES;</span><br><span class="line">    [self customLocationAccracyCircle:self.mapView];</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)customLocationAccracyCircle:(BMKMapView *)mapView &#123;</span><br><span class="line">    BMKLocationViewDisplayParam *param = [[BMKLocationViewDisplayParam alloc] init];</span><br><span class="line">    <span class="comment">// 是否显示范围</span></span><br><span class="line">    param.isAccuracyCircleShow = NO;</span><br><span class="line">    <span class="comment">// 当前位置显示的图标</span></span><br><span class="line">    param.locationViewImgName = @<span class="string">"currentAddr"</span>;</span><br><span class="line">    param.isRotateAngleValid = NO;</span><br><span class="line">    <span class="comment">// 动态定制我的位置样式</span></span><br><span class="line">    [mapView updateLocationViewWithParam:param];</span><br><span class="line">    [mapView setZoomLevel:<span class="number">19</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>定位开启的代理</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> mark - BMKLocationServiceDelegate</span></span><br><span class="line">- (<span class="keyword">void</span>)willStartLocatingUser &#123;</span><br><span class="line">    NSLog(@<span class="string">"start locate"</span>);</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation &#123;</span><br><span class="line">  <span class="comment">// 定位坐标</span></span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)didStopLocatingUser &#123;</span><br><span class="line">    <span class="comment">// 关闭定位状态</span></span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)didFailToLocateUserWithError:(NSError *)error &#123;</span><br><span class="line">    NSLog(@<span class="string">"error %@"</span>, error);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>反地理编码(将地址转换成坐标)</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (BMKGeoCodeSearch *)geocodeSearch &#123;</span><br><span class="line">    <span class="keyword">if</span> (nil == _geocodeSearch) &#123;</span><br><span class="line">        _geocodeSearch = [[BMKGeoCodeSearch alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> _geocodeSearch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据详细地址获取坐标</span></span><br><span class="line">- (<span class="keyword">void</span>)cmi_getCompanyCoorWithCity:(NSString *)city address:(NSString *)address &#123;</span><br><span class="line">    BMKGeoCodeSearchOption *geocodeSearchOption = [[BMKGeoCodeSearchOption alloc] init];</span><br><span class="line">    geocodeSearchOption.city = city; <span class="comment">// 城市</span></span><br><span class="line">    geocodeSearchOption.address = address; <span class="comment">// 详细地址</span></span><br><span class="line">    BOOL flag = [_geocodeSearch geoCode:geocodeSearchOption];</span><br><span class="line">    <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">        NSLog(@<span class="string">"geo检索成功"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        NSLog(@<span class="string">"geo检索不成功"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error &#123;</span><br><span class="line">    <span class="keyword">if</span> (error == <span class="number">0</span>) &#123;</span><br><span class="line">        NSLog(@<span class="string">"根据坐标显示地理位置  %@"</span>, result.address);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>地理编码(将坐标转化成地理位置)</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据坐标获取详细地址</span></span><br><span class="line">- (<span class="keyword">void</span>)getAddressWithCurrentCoor:(CLLocationCoordinate2D)coor &#123;</span><br><span class="line">    CLLocationCoordinate2D pt = (CLLocationCoordinate2D)&#123;<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">if</span> (coor.latitude != <span class="number">0</span> &amp;&amp; coor.longitude != <span class="number">0</span>) &#123;</span><br><span class="line">        pt = (CLLocationCoordinate2D)&#123;coor.latitude ,coor.longitude&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc] init];</span><br><span class="line">    reverseGeocodeSearchOption.reverseGeoPoint = pt;</span><br><span class="line">    BOOL flag = [_geocodeSearch reverseGeoCode:reverseGeocodeSearchOption];</span><br><span class="line">    <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">        NSLog(@<span class="string">"反geo检索成功"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        NSLog(@<span class="string">"反geo检索失败"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error &#123;</span><br><span class="line">    <span class="keyword">if</span> (error == <span class="number">0</span>) &#123;</span><br><span class="line">        NSLog(@<span class="string">"获取坐标: %f %f"</span>, result.location.latitude, result.location.longitude);</span><br><span class="line">        <span class="comment">// BMKGeoCodeResult 中有poiList数组属性用来检索当前位置的周边街道</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>计算两点的空间距离</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// companyCoordinate 公司坐标 currentCoordinate 当前位置坐标</span></span><br><span class="line">- (<span class="keyword">double</span>)getDistanceWithCompanyPoint:(CLLocationCoordinate2D)companyCoordinate currentPoints:(CLLocationCoordinate2D)currentCoordinate &#123;</span><br><span class="line">    BMKMapPoint point1 = BMKMapPointForCoordinate(companyCoordinate);</span><br><span class="line">    BMKMapPoint point2 = BMKMapPointForCoordinate(currentCoordinate);</span><br><span class="line">    CLLocationDistance distance = BMKMetersBetweenMapPoints(point1, point2);</span><br><span class="line">    <span class="keyword">return</span> distance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
+          创建地图创建mapView需要viewWillApper声明
+123456- (void)cmi_viewWillApper &#123;    [_mapView viewWillAppear];    _mapView.delegate = self;    _locService.delega
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/01/百度地图使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -519,6 +560,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/images/touxiang.jpeg"
+                alt="Slash" />
+            
               <p class="site-author-name" itemprop="name">Slash</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -537,6 +582,15 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
             
 
@@ -544,6 +598,22 @@
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/StayWorld" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:w1010446739@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
           
 
           
